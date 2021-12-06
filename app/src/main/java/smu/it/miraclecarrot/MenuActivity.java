@@ -56,14 +56,20 @@ public class MenuActivity extends AppCompatActivity {
     private Date date, getTimee, timee, datetime;
     private Calendar calendar;
     private SimpleDateFormat simpleDateFormatDay, simpleDateFormatTime, dateFormat;
-    private String nickName, setTime, getDay, getTime, pushAlarm;
+    private String setTime, getDay, getTime, pushAlarm;
     private Bundle bundle;
     private Handler handler = new Handler();
+
+    // MenuActivity의 nickName 변수 공유
+    public static Context context_main;
+    public String nickName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        context_main = this;
 
         // 현재 로그인 중인 사용자의 닉네임을 받아옴
         intent = getIntent();
@@ -200,8 +206,6 @@ public class MenuActivity extends AppCompatActivity {
         // 알람매니저를 사용해 푸시 알림 - AlarmReceiver에 값 전달
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         intent = new Intent(this, AlarmReceiver.class);
-        System.out.println(nickName);
-        intent.putExtra("nickName", nickName);  // 알림 시 인텐트를 사용해 현재 사용자의 닉네임을 전달
         pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         long now = System.currentTimeMillis(); // 시스템의 현재 시간 불러오기

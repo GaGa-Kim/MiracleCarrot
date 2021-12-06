@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
+import android.os.Handler;
 
 import androidx.core.app.NotificationCompat;
 
@@ -18,8 +19,10 @@ import static android.app.PendingIntent.*;
 
 public class AlarmReceiver extends BroadcastReceiver {
 
+    public AlarmReceiver(){ }
+
     private NotificationManager notificationManager;
-    private NotificationCompat.Builder builder;
+    private NotificationCompat.Builder builder = null;
 
     private static String CHANNEL_ID = "channel";
     private static String CHANNEL_NAME = "channel";
@@ -33,19 +36,15 @@ public class AlarmReceiver extends BroadcastReceiver {
     private Intent intent2;
     private PendingIntent pendingIntent;
 
-    public AlarmReceiver(){ }
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        // MenuActivity에서 알림 설정 시 인텐트로 닉네임을 전달하게 되는 것을 받아옴
-        nickName = intent.getStringExtra("nickName");
-        System.out.println(nickName);
+        // MenuActivity의 nickName 변수 접근
+        nickName = ((MenuActivity)MenuActivity.context_main).nickName;
 
         alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         // 오레오 이상은 채널을 설정해줘야 Notification이 작동하므로 채널 설정
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
-            builder = null;
             notificationManager = (NotificationManager)context.getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.createNotificationChannel(new NotificationChannel(CHANNEL_ID, CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT));
             // 채널 생성 후 해당 채널로 Notification 생성
