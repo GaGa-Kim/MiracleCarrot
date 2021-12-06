@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/modify"
+        android:title="내용 수정하기"/>
+    <item
+        android:id="@+id/delete"
+        android:title="내용 삭제하기"/>
+    <item
+        android:id="@+id/modifyTime"
+        android:title="시간 수정하기"/>
+    <item
+        android:id="@+id/deleteTime"
+        android:title="시간 삭제하기"/>
+    <item
+        android:id="@+id/deleteAll"
+        android:title="일정 삭제하기"/>
+
+</menu>

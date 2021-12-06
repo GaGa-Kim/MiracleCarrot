@@ -1,0 +1,21 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MiracleCarrot" parent="Theme.AppCompat.Light">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">#FEEBB6</item>
+        <item name="fontFamily">@font/medium</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="android:itemBackground">@color/white</item>
+        <item name="android:checkMarkTint">#F69F48</item>
+        <item name="colorAccent">#F69F48</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">#F69F48</item>
+        <item name="colorSecondaryVariant">#F69F48</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

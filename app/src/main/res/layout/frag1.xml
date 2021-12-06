@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:background="@drawable/background"
+    android:id="@+id/mainLayout"
+    android:gravity="center"
+    android:padding="30dp"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/subLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="#FEEBB6"
+        android:elevation="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/calendarView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:textColor="#F69F48"
+            android:maxLines="1"
+            android:shadowRadius="1.0"
+            android:shadowDx="1.0"
+            android:shadowDy="1.0"
+            android:shadowColor="#000000"
+            android:fontFamily="@font/bold"
+            android:text="달력" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+z
+            <TextView
+                android:id="@+id/timeView"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textColor="#F69F48"
+                android:maxLines="1"
+                android:shadowRadius="0.5"
+                android:shadowDx="0.5"
+                android:shadowDy="0.5"
+                android:shadowColor="#000000"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="5dp"
+                android:hint="할 일을 입력하세요."
+                android:inputType="textMultiLine"
+                android:backgroundTint="#F69F48"
+                android:textColorHint="#F69F48"
+                android:textColor="#F69F48" />
+
+            <Button
+                android:id="@+id/btnTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="5dp"
+                android:text="시간 설정"
+                android:backgroundTint="@color/white"
+                android:elevation="50dp"
+                android:textColor="#F69F48"
+                android:textStyle="bold"/>
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="일정 추가"
+                android:backgroundTint="@color/white"
+                android:elevation="50dp"
+                android:textColor="#F69F48"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <ListView
+                android:id="@+id/listView"
+                android:divider="#F69F48"
+                android:dividerHeight="1dp"
+                android:layout_width="match_parent"
+                android:layout_height="424dp" >
+
+            </ListView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/userNameView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:textColor="#F69F48"
+                android:maxLines="1"
+                android:textStyle="bold"
+                android:text="님의 미라클당근"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

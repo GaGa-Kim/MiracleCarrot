@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:background="@drawable/background"
+    android:id="@+id/mainLayout"
+    android:padding="30dp"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/subLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:elevation="10dp"
+        android:background="#FEEBB6"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/calendarView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:textColor="#F69F48"
+            android:maxLines="1"
+            android:shadowRadius="1.0"
+            android:shadowDx="1.0"
+            android:shadowDy="1.0"
+            android:shadowColor="#000000"
+            android:fontFamily="@font/bold"
+            android:text="달력" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="5sp"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="10dp"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/editText"
+                android:layout_width="330dp"
+                android:layout_height="467dp"
+                android:layout_weight="1"
+                android:lineSpacingExtra="9dp"
+                android:ems="10"
+                android:gravity="start|top"
+                android:textColor="#F69F48"
+                android:background="@drawable/letter_background"
+                android:textStyle="bold"
+                android:textColorHint="#F69F48"
+                android:hint="일기나 메모를 입력하세요."
+                android:inputType="textMultiLine" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginRight="10dp"
+                android:text="일기 추가"
+                android:textColor="#F69F48"
+                android:backgroundTint="@color/white"
+                android:textStyle="bold"
+                android:elevation="50dp" />
+
+            <Button
+                android:id="@+id/btnDelete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="#F69F48"
+                android:backgroundTint="@color/white"
+                android:elevation="50dp"
+                android:text="일기 삭제"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

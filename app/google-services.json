@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "593822560884",
+    "project_id": "miraclecarrot-46ca6",
+    "storage_bucket": "miraclecarrot-46ca6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:593822560884:android:932e94386e9bf0da795721",
+        "android_client_info": {
+          "package_name": "smu.it.miraclecarrot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "593822560884-d3rt6c4tn5295r3la4fjqvt53assk4q6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "smu.it.miraclecarrot",
+            "certificate_hash": "663bfabfad9e3df7190ed3aad4df70a7ba783997"
+          }
+        },
+        {
+          "client_id": "593822560884-3jhb1b8m8jdcbpotk5p5pab1jfhio4n8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD92bnRBQ1aPwOO-BaiUb1uD-PghR95HO8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "593822560884-3jhb1b8m8jdcbpotk5p5pab1jfhio4n8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
