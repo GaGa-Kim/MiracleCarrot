@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 날씨 및 옷 추천 화면 부분 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
+    android:background="@drawable/all_background"
     android:padding="30dp"
     android:gravity="center"
-    android:id="@+id/mainLayout"
-    tools:context=".MainActivity">
+    android:id="@+id/mainLayout">
 
     <LinearLayout
         android:id="@+id/subLayout"

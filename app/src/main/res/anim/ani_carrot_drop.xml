@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 물 떨어지는 효과 애니메이션 : 분무기로 물을 주는 효과와 영양제를 주는 효과에 사용 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-
     <translate
         android:interpolator="@android:anim/linear_interpolator"
         android:duration="1000"
@@ -9,7 +9,6 @@
         android:fromYDelta="0"
         android:toYDelta="200%">
     </translate>
-
     <scale
         android:fromXScale="1.0"
         android:toXScale="3.0"
@@ -20,7 +19,6 @@
         android:duration="500"
         android:repeatCount="1"
         android:repeatMode="reverse" />
-
     <scale
         android:startOffset="2500"
         android:duration="2500"
@@ -30,7 +28,6 @@
         android:fromYScale="1.0"
         android:toXScale="0.5"
         android:toYScale="0.5" />
-
     <alpha
         android:duration="@android:integer/config_mediumAnimTime"
         android:fromAlpha="1.0"

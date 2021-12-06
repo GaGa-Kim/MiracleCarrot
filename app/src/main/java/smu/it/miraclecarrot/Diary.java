@@ -1,11 +1,9 @@
 package smu.it.miraclecarrot;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
+// 일일 다이어리를 파이어베이스 데이터베이스에 저장하기 위해 사용
 public class Diary {
 
-    private String diaryText;
+    private String diaryText;  // 다이어리 내용
 
     public Diary() {
 

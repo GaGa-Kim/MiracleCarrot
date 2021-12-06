@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MiracleCarrot</string>
+    <string name="clothes0">민소매티, 반바지, 반팔티</string>
+    <string name="clothes1">반팔티, 얇은 셔츠, 얇은 긴팔, 반바지, 면바지</string>
+    <string name="clothes2">긴팔티, 얇은 가디건, 면바지, 후드티, 청바지, 슬랙스</string>
+    <string name="clothes3">얇은 니트, 얇은 재킷, 가디건, 맨투맨, 면바지, 청바지</string>
+    <string name="clothes4">얇은 재킷, 가디건, 간절기 야상, 맨투맨, 니트</string>
+    <string name="clothes5">재킷, 트렌치 코트, 니트, 면바지, 청바지</string>
+    <string name="clothes6">코트, 가죽 재킷, 니트, 스카프, 두꺼운 바지</string>
+    <string name="clothes7">패딩, 두꺼운 코트, 목도리, 기모 제품</string>
 </resources>

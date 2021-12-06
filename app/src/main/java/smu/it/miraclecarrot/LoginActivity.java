@@ -19,13 +19,16 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText enterNickname;
-    Button enterButton;
+    private EditText enterNickname;
+    private Button enterButton;
 
+    // 파이어베이스 사용
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
     String nickName;
+    User user;
+    Intent intent1;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,15 +38,15 @@ public class LoginActivity extends AppCompatActivity {
         enterNickname = findViewById(R.id.enterNickname);
 
         enterButton = findViewById(R.id.enterButton);
-        enterButton.setOnClickListener(new View.OnClickListener() {  // 닉네임 입력 후, 버튼 클릭 시 인텐트
+        // 닉네임 입력 후, 버튼 클릭 시 인텐트를 이용해 닉네임을 넘겨주며, MenuActivity로 화면 이동
+        enterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String nickName = enterNickname.getText().toString();
-                User user = new User(nickName, true);
-
+                nickName = enterNickname.getText().toString();
+                user = new User(nickName, true);  // 데이터베이스에 닉네임과 현재 로그인 상태 (true) 를 저장
                 databaseReference.child("login").setValue(user);
 
-                Intent intent1 = new Intent(getApplicationContext(), MenuActivity.class);
+                intent1 = new Intent(getApplicationContext(), MenuActivity.class);
                 intent1.putExtra("nickName", nickName);
                 startActivity(intent1);
 

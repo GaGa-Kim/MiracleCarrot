@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 햇빛이 내리쬐는 효과 애니메이션 : 햇빛이 반짝이며 커지는 효과에 사용 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="1000"
     android:fillAfter="false"
     android:interpolator="@android:anim/accelerate_interpolator"
     android:shareInterpolator="true" >
-
     <translate
         android:interpolator="@android:anim/linear_interpolator"
         android:duration="2000"
@@ -13,7 +13,6 @@
         android:fromYDelta="0"
         android:toYDelta="30%">
     </translate>
-
     <scale
         android:fromXScale="1.0"
         android:toXScale="2.0"
@@ -24,10 +23,8 @@
         android:duration="1000"
         android:repeatCount="1"
         android:repeatMode="reverse" />
-
     <alpha
         android:duration="@android:integer/config_mediumAnimTime"
         android:fromAlpha="1.0"
         android:toAlpha="0.5" />
-
 </set>

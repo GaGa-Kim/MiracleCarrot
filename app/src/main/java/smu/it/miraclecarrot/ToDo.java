@@ -1,10 +1,11 @@
 package smu.it.miraclecarrot;
 
+// ToDo 리스트를 파이어베이스 데이터베이스에 저장하기 위해 사용
 public class ToDo {
 
-    private String todoText;
-    private String todoTime;
-    private boolean todoCheck;
+    private String todoText;  // ToDo 내용
+    private String todoTime;  // ToDo 시간
+    private boolean todoCheck;  // ToDo 체크박스 (true, false)
 
     public ToDo() {
 

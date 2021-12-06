@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 당근이 돌아가는 효과 애니메이션 : 당근의 크기가 100퍼센트가 되면 당근을 수확했다는 의미의 효과에 사용 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android"
     android:duration="1000"
     android:fillAfter="false"
     android:interpolator="@android:anim/accelerate_interpolator"
     android:shareInterpolator="true" >
-
     <alpha
         android:fromAlpha="1.0"
         android:toAlpha="0.0" />
-
     <rotate
         android:fromDegrees="0"
         android:pivotX="50%"
         android:pivotY="50%"
         android:toDegrees="360" />
-
     <scale
         android:fillAfter="true"
         android:fromXScale="1.0"
@@ -23,5 +21,4 @@
         android:pivotY="50%"
         android:toXScale="0.0"
         android:toYScale="0.0" />
-
 </set>

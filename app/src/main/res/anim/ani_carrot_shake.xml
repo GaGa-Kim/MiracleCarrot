@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 흔들리는 효과 애니메이션 : 분무기, 영양제, 해가 좌우로 흔들리는 효과에 사용 -->
 <set xmlns:android="http://schemas.android.com/apk/res/android">
-
     <rotate
         android:duration="100"
         android:fromDegrees="-5"
@@ -9,5 +9,4 @@
         android:repeatCount="infinite"
         android:repeatMode="reverse"
         android:toDegrees="5" />
-
 </set>

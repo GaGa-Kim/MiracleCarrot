@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- 당근 키우기 자기보상 화면 부분 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
+    android:background="@drawable/all_background"
     android:gravity="center"
     android:padding="30dp"
-    android:id="@+id/mainLayout"
-    tools:context=".MainActivity">
+    android:id="@+id/mainLayout">
 
     <LinearLayout
         android:id="@+id/subLayout"

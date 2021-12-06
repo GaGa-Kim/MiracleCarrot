@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -33,61 +34,63 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Frag3 extends Fragment {
+public class MenuFrag3 extends Fragment {
 
     private View view;
-
     private ImageView carrotView, nutrientsView, waterView, sunView;
-    private TextView goalView, percentView, pointView;
+    private TextView percentView, pointView;
+    private EditText goalView;
     private ProgressBar progressBar;
     private LinearLayout animationLayout = null;
     private AnimationDrawable animationDrawable;
 
-    int currentPoint;
-    int currentPercent;
-    float scale;
-
+    // 파이어베이스 사용
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-    String nickName;
-
-    SoundPool soundPool;
-    int soundID_1;
-    int soundID_2;
-    int soundID_3;
-    int soundID_4;
+    private String nickName, goal, currentGoal;
+    private Bundle bundle;
+    private SoundPool soundPool;
+    private int currentPoint, currentPercent, soundID_1, soundID_2, soundID_3, soundID_4;
+    private float scale;
+    private Map<String, Object> map = new HashMap<>();
+    private Animation carrot_drop_ani, carrot_shine_ani, carrot_shake_ani, carrot_harvest_ani, carrot_fire_ani;
+    private LayoutInflater nutrientInflater, waterInflater, sineInflater, harvestInflater;
+    private Handler handler = new Handler();
+    private BitmapDrawable frame1, frame2, frame3;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag3, container, false);
 
-        Bundle extra = this.getArguments();
-        if(extra != null) {
-            extra = getArguments();
-            nickName = extra.getString("nickName");
+        // MenuActivity에서 넘겨준 현재 사용자의 닉네임을 가져와서 적어줌
+        bundle = this.getArguments();
+        if(bundle != null) {
+            bundle = getArguments();
+            nickName = bundle.getString("nickName");
         }
 
+        // 효과음에 사용할 음악들
         soundPool = new SoundPool(5, AudioManager.STREAM_MUSIC, 0);
         soundID_1 = soundPool.load(getActivity(), R.raw.nutrient, 1);
         soundID_2 = soundPool.load(getActivity(), R.raw.water, 2);
         soundID_3 = soundPool.load(getActivity(), R.raw.sun, 3);
         soundID_4 = soundPool.load(getActivity(), R.raw.harvest, 4);
-
-
-        readGoal();
+        
+        // 데이터베이스에 저장된 목표(자기보상), 포인트, 퍼센트, 당근 크기 정보를 가져옴
+        readGoal();  
         readPoint();
         readPercent();
         readCarrotScale();
 
+        // 자기보상 입력 후 엔터 클릭 시 저장
         goalView = view.findViewById(R.id.goalView);
         goalView.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int keyCode, KeyEvent keyEvent) {
                 if(keyCode == keyEvent.KEYCODE_ENTER) {
-                    String goal = goalView.getText().toString();
-                    Map<String, Object> map = new HashMap<>();
+                    goal = goalView.getText().toString();
                     map.put("goals", goal);
                     databaseReference.child(nickName).child("goal").setValue(map);
                 }
@@ -102,11 +105,11 @@ public class Frag3 extends Fragment {
         pointView = view.findViewById(R.id.pointView);
 
         // 영양분과 물의 물방물이 떨어지는 애니메이션 : Tweening Animation
-        Animation carrot_drop_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.carrot_drop_ani);
+        carrot_drop_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.ani_carrot_drop);
         // 햇빛이 반짝이는 애니메이션 : Tweening Animation
-        Animation carrot_shine_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.carrot_shine_ani);
+        carrot_shine_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.carrot_shine_ani);
         // 분무기와 해가 움직이는 애니메이션 : Tweening Animation
-        Animation carrot_shake_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.carrot_shake_ani);
+        carrot_shake_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.ani_carrot_shake);
 
         // 이미지뷰인 영양분, 물, 햇빛 클릭 시 이벤트
         nutrientsView = view.findViewById(R.id.nutrientsView);
@@ -114,38 +117,13 @@ public class Frag3 extends Fragment {
             @Override
             public void onClick(View view) {
                 readPoint();
-
-                // inflater를 이용해 animationLayout에 영양분 주기 layout인 carrot_nutrient 가져옴
-                LayoutInflater nutrientInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                nutrientInflater.inflate(R.layout.carrot_nutrient, animationLayout, true);
-
-                soundPool.play(soundID_1, 1f, 1f, 0, 0, 1f);
-
-                // carrot_nutrient layout 의 imageView를 가져와서 애니메이션
-                animationLayout.findViewById(R.id.nutrients).startAnimation(carrot_shake_ani);
-                animationLayout.findViewById(R.id.nutrient1).startAnimation(carrot_drop_ani);
-                animationLayout.findViewById(R.id.nutrient2).startAnimation(carrot_drop_ani);
-                animationLayout.findViewById(R.id.nutrient3).startAnimation(carrot_drop_ani);
-                animationLayout.findViewById(R.id.nutrient4).startAnimation(carrot_drop_ani);
-                animationLayout.findViewById(R.id.nutrient5).startAnimation(carrot_drop_ani);
-
-                // 애니메이션 끝난 후 inflater 삭제
-                animationCarrotStop();
-
-                // 1초 후 당근 크기 키우기
-                Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        growCarrot(20);
-                    }
-                }, 1000);
-
-                /*
-                if (currentPoint - 20 >= 0) {
+                if (currentPoint - 20 >= 0) {  // 포인트가 20 이상 있을 때만
                     // inflater를 이용해 animationLayout에 영양분 주기 layout인 carrot_nutrient 가져옴
-                    LayoutInflater nutrientInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    nutrientInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     nutrientInflater.inflate(R.layout.carrot_nutrient, animationLayout, true);
+
+                    // 효과음 재생
+                    soundPool.play(soundID_1, 1f, 1f, 0, 0, 1f);
 
                     // carrot_nutrient layout 의 imageView를 가져와서 애니메이션
                     animationLayout.findViewById(R.id.nutrients).startAnimation(carrot_shake_ani);
@@ -159,7 +137,6 @@ public class Frag3 extends Fragment {
                     animationCarrotStop();
 
                     // 1초 후 당근 크기 키우기
-                    Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -172,8 +149,6 @@ public class Frag3 extends Fragment {
                 else {
                     Toast.makeText(getActivity(), "포인트가 모자랍니다.", Toast.LENGTH_SHORT).show();
                 }
-
-                 */
             }
         });
 
@@ -182,12 +157,12 @@ public class Frag3 extends Fragment {
             @Override
             public void onClick(View view) {
                 readPoint();
-
-                if (currentPoint - 10 >= 0) {
+                if (currentPoint - 10 >= 0) {  // 포인트가 10 이상 있을 때만
                     // inflater를 이용해 animationLayout에 물 주기 layout인 carrot_water 가져옴
-                    LayoutInflater waterInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    waterInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     waterInflater.inflate(R.layout.carrot_water, animationLayout, true);
 
+                    // 효과음 재생
                     soundPool.play(soundID_2, 1f, 1f, 0, 0, 1f);
 
                     // carrot_water layout 의 imageView를 가져와서 애니메이션
@@ -202,7 +177,6 @@ public class Frag3 extends Fragment {
                     animationCarrotStop();
 
                     // 1초 후 당근 크기 키우기
-                    Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -224,12 +198,12 @@ public class Frag3 extends Fragment {
             @Override
             public void onClick(View view) {
                 readPoint();
-
-                if (currentPoint - 10 >= 0) {
+                if (currentPoint - 10 >= 0) {  // 포인트가 10 이상 있을 때만
                     // inflater를 이용해 animationLayout에 햇빛 주기 layout인 carrot_sun 가져옴
-                    LayoutInflater sinInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    sinInflater.inflate(R.layout.carrot_sun, animationLayout, true);
+                    sineInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                    sineInflater.inflate(R.layout.carrot_sun, animationLayout, true);
 
+                    // 효과음 재생
                     soundPool.play(soundID_3, 1f, 1f, 0, 0, 1f);
 
                     // carrot_sun layout 의 imageView를 가져와서 애니메이션
@@ -240,7 +214,6 @@ public class Frag3 extends Fragment {
                     animationCarrotStop();
 
                     // 1초 후 당근 크기 키우기
-                    Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -262,16 +235,16 @@ public class Frag3 extends Fragment {
     // 이미지뷰인 영양분, 물, 햇빛 클릭 시에 당근 키우기
     private void growCarrot(int point) {
 
+        // 당근 성장률 퍼센트 가져와서 프로그레스바에 적용
         readPercent();
         progressBar.setProgress(currentPercent);
 
         // 당근 이미지 사이즈 가져오기
         float carrotSizeX = carrotView.getScaleX(), carrotSizeY = carrotView.getScaleY();
 
-        // 당근 크기 증가
+        // 당근 크기 증가 및 증가된 크기 데이터베이스에 저장
         carrotView.setScaleX(carrotSizeX+point/10*0.1f);
         carrotView.setScaleY(carrotSizeY+point/10*0.1f);
-
         databaseReference.child(nickName).child("carrotscale").child("scale").setValue(carrotView.getScaleX());
 
         // 성장률 증가
@@ -282,16 +255,14 @@ public class Frag3 extends Fragment {
         databaseReference.child(nickName).child("percents").child("percent").setValue(currentPercent+point);
 
         // 당근이 모두 성장하면 수확할 때 나타나는 애니메이션
-        Animation carrot_harvest_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.carrot_harvest_ani);
+        carrot_harvest_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.ani_carrot_harvest);
 
         // 성장률이 100%를 넘을 시에 목표 달성 보상에 대한 토스트 메시지 출력
         if (currentPercent+point >= 100) {
-            String goal = goalView.getText().toString();
-            Toast toast = Toast.makeText(view.getContext(), "당근을 수확했습니다!\n보상 : " + goal, Toast.LENGTH_LONG);
-            toast.show();
+            goal = goalView.getText().toString();
+            Toast.makeText(view.getContext(), "당근을 수확했습니다!\n보상 : " + goal, Toast.LENGTH_LONG).show();
 
             // 토스트 메시지 출력 후
-            Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -314,7 +285,7 @@ public class Frag3 extends Fragment {
         }
     }
 
-    // 영양분, 물, 햇빛 inflater 삭제
+    // 영양분, 물, 햇빛 효과 출력 완료 후, inflater 삭제
     private void animationCarrotStop() {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -330,16 +301,16 @@ public class Frag3 extends Fragment {
         soundPool.play(soundID_4, 1f, 1f, 0, 0, 1f);
 
         // 폭죽의 깜빡임을 위한 애니메이션 : Tweening Animation
-        Animation carrot_fire_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.carrot_fire_ani);
+        carrot_fire_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.ani_carrot_fire);
 
         // inflater를 이용해 animationLayout에 수확 하기 layout인 carrot_harvest 가져옴
-        LayoutInflater harvestInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        harvestInflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         harvestInflater.inflate(R.layout.carrot_harvest, animationLayout, true);
 
         // 폭죽 효과를 주기 위한 애니메이션 : Frame Animation
-        BitmapDrawable frame1 = (BitmapDrawable) getResources().getDrawable(R.drawable.firecracker, null);
-        BitmapDrawable frame2 = (BitmapDrawable) getResources().getDrawable(R.drawable.fireworks_1, null);
-        BitmapDrawable frame3 = (BitmapDrawable) getResources().getDrawable(R.drawable.fireworks_2, null);
+        frame1 = (BitmapDrawable) getResources().getDrawable(R.drawable.firecracker, null);
+        frame2 = (BitmapDrawable) getResources().getDrawable(R.drawable.fireworks_1, null);
+        frame3 = (BitmapDrawable) getResources().getDrawable(R.drawable.fireworks_2, null);
 
         int reasonableDuration = 1000;
 
@@ -358,7 +329,6 @@ public class Frag3 extends Fragment {
         // 폭죽의 깜빡임을 위한 애니메이션
         animationLayout.findViewById(R.id.firecracker).startAnimation(carrot_fire_ani);
 
-        Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -371,17 +341,16 @@ public class Frag3 extends Fragment {
         }, 2100);
     }
 
+    // 데이터베이스에 저장된 목표(자기보상) 정보를 가져옴
     private void readGoal() {
         databaseReference.child(nickName).child("goal").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 for (DataSnapshot goalData : snapshot.getChildren()) {
-                    String currentGoal = goalData.getValue().toString();
+                    currentGoal = goalData.getValue().toString();
                     goalView.setText(currentGoal);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("FireBaseData", "loadPost:onCancelled", error.toException());
@@ -389,17 +358,16 @@ public class Frag3 extends Fragment {
         });
     }
 
+    // 데이터베이스에 저장된 포인트 정보를 가져옴
     private void readPoint() {
         databaseReference.child(nickName).child("points").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 for (DataSnapshot pointData : snapshot.getChildren()) {
                     currentPoint = Integer.parseInt(pointData.getValue().toString());
                     pointView.setText(String.valueOf("사용 가능한 포인트 : "+currentPoint));
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.w("FireBaseData", "loadPost:onCancelled", error.toException());
@@ -407,11 +375,11 @@ public class Frag3 extends Fragment {
         });
     }
 
+    // 데이터베이스에 저장된 퍼센트 정보를 가져옴
     private void readPercent() {
         databaseReference.child(nickName).child("percents").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 for (DataSnapshot percentData : snapshot.getChildren()) {
                     currentPercent = Integer.parseInt(percentData.getValue().toString());
                     percentView.setText(currentPercent+"%");
@@ -425,13 +393,13 @@ public class Frag3 extends Fragment {
         });
     }
 
+    // 데이터베이스에 저장된 당근 크기 정보를 가져옴
     private void readCarrotScale() {
         databaseReference.child(nickName).child("carrotscale").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot scaleData : snapshot.getChildren()) {
                     scale = Float.parseFloat(scaleData.getValue().toString());
-                    System.out.println(scale);
                     if(percentView.getText() != "0%") {
                         carrotView.setScaleX(scale);
                         carrotView.setScaleY(scale);
