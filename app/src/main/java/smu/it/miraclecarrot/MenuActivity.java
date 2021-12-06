@@ -63,6 +63,7 @@ public class MenuActivity extends AppCompatActivity {
     // MenuActivity의 nickName 변수 공유
     public static Context context_main;
     public String nickName;
+    public MenuItem menuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,6 +164,7 @@ public class MenuActivity extends AppCompatActivity {
         super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.option_menu, menu);
+        menuItem = menu.findItem(R.id.submenu1);
         return true;
     }
 
@@ -174,12 +176,13 @@ public class MenuActivity extends AppCompatActivity {
                 databaseReference.child("login").child("nickName").setValue("");
                 databaseReference.child("login").child("userLogin").setValue(false);
                 break;
-            case R.id.submenu1:  // 리마인드 알림 - 알림 설정 클릭 시 타임피커를 열어 리마인드 알림을 설정하도록 함
+            case R.id.submenu2:  // 리마인드 알림 - 알림 설정 클릭 시 타임피커를 열어 리마인드 알림을 설정하도록 함
                 timePickerDialog.show();
                 break;
-            case R.id.submenu2:  // 리마인드 알림 - 알림 삭제 시 데이터베이스에서 알림을 설정한 시간을 지워주고 알림 삭제
+            case R.id.submenu3:  // 리마인드 알림 - 알림 삭제 시 데이터베이스에서 알림을 설정한 시간을 지워주고 알림 삭제
                 cancelAlarm();
                 databaseReference.child(nickName).child("alarms").child("alarm").removeValue();
+                menuItem.setTitle("알림 없음");
                 Toast.makeText(this, "알림이 취소되었습니다.", Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -253,7 +256,7 @@ public class MenuActivity extends AppCompatActivity {
         alarmManager.cancel(pendingIntent);
     }
 
-    // 재로그인 시 설정해뒀던 리마인드 알림을 위해 저장한 시간을 읽어온 후, 알림 설정
+    // 재로그인 시 설정해뒀던 리마인드 알림을 위해 저장한 시간을 읽어온 후, 알림 설정 및 알림 시간 옵션 메뉴의 서브 메뉴에 출력
     private void readTime() {
         databaseReference.child(nickName).child("alarms").addValueEventListener(new ValueEventListener() {
             @Override
@@ -264,6 +267,7 @@ public class MenuActivity extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            menuItem.setTitle(setTime);
                             startAlarm(setTime);
                         }
                     }, 1000);

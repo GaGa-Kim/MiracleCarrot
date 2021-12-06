@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Handler;
+import android.view.MenuItem;
 
 import androidx.core.app.NotificationCompat;
 
@@ -35,6 +36,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     private AlarmManager alarmManager;
     private Intent intent2;
     private PendingIntent pendingIntent;
+    private MenuItem menuItem;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -67,5 +69,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         // 푸시 알림 후 데이터베이스에서 알림 시간 삭제
         databaseReference.child(nickName).child("alarms").child("alarm").removeValue();
+
+        // MenuActivity의 menuItem 변수 접근
+        menuItem = ((MenuActivity)MenuActivity.context_main).menuItem;
+        // 푸시 알림 후 알림 시간 옵션 메뉴의 서브 메뉴 수정
+        menuItem.setTitle("알림 없음");
     }
 }
