@@ -60,7 +60,7 @@ public class MenuActivity extends AppCompatActivity {
     private Bundle bundle;
     private Handler handler = new Handler();
 
-    // MenuActivity의 nickName 변수 공유
+    // MenuActivity의 변수 공유
     public static Context context_main;
     public String nickName;
     public MenuItem menuItem;
@@ -209,6 +209,7 @@ public class MenuActivity extends AppCompatActivity {
         // 알람매니저를 사용해 푸시 알림 - AlarmReceiver에 값 전달
         alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         intent = new Intent(this, AlarmReceiver.class);
+        // PendingIntent : 가지고 있는 인텐트를 보류하고 특정 시점에 작업을 요청하도록 함
         pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
 
         long now = System.currentTimeMillis(); // 시스템의 현재 시간 불러오기
