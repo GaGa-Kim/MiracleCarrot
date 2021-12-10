@@ -135,27 +135,28 @@ public class MenuFrag1 extends Fragment {
         timePickerDialog = new TimePickerDialog(getActivity(), android.R.style.Theme_Holo_Light_Dialog, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker timePicker, int hour, int minute) {
-                if(hour > 10) {
-                    Toast.makeText(getActivity().getApplicationContext(), "오전 10시 이후의 일정은 작성 불가능합니다. 시간을 다시 선택하세요.", Toast.LENGTH_SHORT).show();
-                }
-                else if (hour == 10) {
-                    if (minute > 10) {
-                        timeView.setText("AM "+hour+ ":" + minute+" ");
-                        Toast.makeText(getActivity().getApplicationContext(), "시간이 설정되었습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                    else if (minute < 10) {
-                        timeView.setText("AM "+hour+ ":0" + minute+" ");
-                        Toast.makeText(getActivity().getApplicationContext(), "시간이 설정되었습니다.", Toast.LENGTH_SHORT).show();
-                    }
+                if(hour > 10 || hour < 4) {
+                    Toast.makeText(getActivity().getApplicationContext(), "4시 ~ 11시 전까지의 시간만 선택 가능합니다. 다시 선택하세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    if (minute > 10) {
-                        timeView.setText("AM 0"+hour+ ":" + minute+" ");
-                        Toast.makeText(getActivity().getApplicationContext(), "시간이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                    if (hour == 10) {
+                        if (minute > 10) {
+                            timeView.setText("AM " + hour + ":" + minute + " ");
+                            Toast.makeText(getActivity().getApplicationContext(), "시간이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                        } else if (minute < 10) {
+                            timeView.setText("AM " + hour + ":0" + minute + " ");
+                            Toast.makeText(getActivity().getApplicationContext(), "시간이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else if (minute < 10) {
-                        timeView.setText("AM 0"+hour+ ":0" + minute+" ");
-                        Toast.makeText(getActivity().getApplicationContext(), "시간이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                    else {
+                        if (minute > 10) {
+                            timeView.setText("AM 0"+hour+ ":" + minute+" ");
+                            Toast.makeText(getActivity().getApplicationContext(), "시간이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (minute < 10) {
+                            timeView.setText("AM 0"+hour+ ":0" + minute+" ");
+                            Toast.makeText(getActivity().getApplicationContext(), "시간이 설정되었습니다.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }

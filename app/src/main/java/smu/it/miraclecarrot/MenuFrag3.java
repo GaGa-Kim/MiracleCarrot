@@ -107,7 +107,7 @@ public class MenuFrag3 extends Fragment {
         // 영양분과 물의 물방물이 떨어지는 애니메이션 : Tweening Animation
         carrot_drop_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.ani_carrot_drop);
         // 햇빛이 반짝이는 애니메이션 : Tweening Animation
-        carrot_shine_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.carrot_shine_ani);
+        carrot_shine_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.ani_carrot_shine);
         // 분무기와 해가 움직이는 애니메이션 : Tweening Animation
         carrot_shake_ani = AnimationUtils.loadAnimation(getActivity(), R.anim.ani_carrot_shake);
 

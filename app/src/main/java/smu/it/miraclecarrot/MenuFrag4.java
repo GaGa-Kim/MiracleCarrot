@@ -42,7 +42,7 @@ public class MenuFrag4 extends Fragment {
     private SimpleDateFormat simpleDateFormatDay, simpleDateFormatTime;
     private String getDay, getTime, city, weather, weatherIcon, imgUrl;
     private JSONArray weatherJson;
-    private JSONObject weatherObj, tempK;
+    private JSONObject jsonObject, weatherObj, tempK;
 
     Integer[] clothes = {R.string.clothes0, R.string.clothes1, R.string.clothes2, R.string.clothes3, R.string.clothes4, R.string.clothes5, R.string.clothes6, R.string.clothes7};
 
@@ -90,7 +90,7 @@ public class MenuFrag4 extends Fragment {
                     dayView.setText("현재 날짜 : " +getDay);
                     timeView.setText("현재 시간 : "+getTime);
 
-                    JSONObject jsonObject = new JSONObject(response);
+                    jsonObject = new JSONObject(response);
 
                     // 도시 설정 - 서울
                     city = jsonObject.getString("name");
