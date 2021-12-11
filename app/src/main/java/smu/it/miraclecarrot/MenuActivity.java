@@ -240,9 +240,11 @@ public class MenuActivity extends AppCompatActivity {
 
                 alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                 Toast.makeText(this, nickName+"님의 알림이 설정되었습니다. "+pushAlarm, Toast.LENGTH_SHORT).show();
+                menuItem.setTitle(time);
             }
             else {
                 Toast.makeText(this, "알림을 받을 미래의 시간을 선택하세요.", Toast.LENGTH_SHORT).show();
+                databaseReference.child(nickName).child("alarms").child("alarm").removeValue();
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -268,7 +270,6 @@ public class MenuActivity extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            menuItem.setTitle(setTime);
                             startAlarm(setTime);
                         }
                     }, 1000);
