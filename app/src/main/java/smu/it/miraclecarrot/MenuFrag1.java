@@ -98,8 +98,9 @@ public class MenuFrag1 extends Fragment {
             calendarView.setText(mYear + " - " + (mMonth + 1) + " - " + mDay); // 오늘 날짜 출력
         }
 
-        // 오늘 날짜의 ToDo 리스트와 그 날 스케줄의 키 값을 가져옴
+        // 오늘 날짜의 ToDo 리스트와 포인트 값, 그리고 그 날 스케줄의 키 값을 가져옴
         readToDo();
+        readPoint();
         bringKey();
         
         // 데이트피커를 이용해 일정을 작성할 날짜를 변경
@@ -364,6 +365,7 @@ public class MenuFrag1 extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot pointData : snapshot.getChildren()) {
                     currentPoint = Integer.parseInt(pointData.getValue().toString());
+                    System.out.println(currentPoint);
                 }
             }
 
